@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from setuptools import setup
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+import versioneer
+versioneer.VCS = 'git'
+versioneer.versionfile_source = '{{ cookiecutter.repo_name }}/_version.py'
+versioneer.versionfile_build = '{{ cookiecutter.repo_name }}/_version.py'
+versioneer.tag_prefix = ''
+versioneer.parentdir_prefix = '{{ cookiecutter.repo_name }}-'
 
 
 readme = open('README.rst').read()
@@ -21,7 +24,7 @@ test_requirements = [
 
 setup(
     name='{{ cookiecutter.repo_name }}',
-    version='{{ cookiecutter.version }}',
+    version=versioneer.get_version(),
     description='{{ cookiecutter.project_short_description }}',
     long_description=readme + '\n\n' + history,
     author='{{ cookiecutter.full_name }}',
@@ -51,4 +54,5 @@ setup(
     ],
     test_suite='{{cookiecutter.repo_name}}.tests',
     tests_require=test_requirements,
+    cmdclass=versioneer.get_cmdclass(),
 )
